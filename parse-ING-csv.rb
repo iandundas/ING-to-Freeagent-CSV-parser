@@ -25,18 +25,21 @@ CSV.open(filename_sansextension + "-converted.csv", "wb") do |csv|
 		
 		date = Date.parse(row["Datum"]).strftime("%d/%m/%Y")
 		amount = row["Bedrag (EUR)"].sub(/,/, ".")
-		type = row["Af Bij"]
+		direction = row["Af Bij"]
 		
-		if type.eql?"Bij"
+		if direction.eql?"Bij"
 			amount = Float(amount)
-		elsif type.eql?"Af"
+		elsif direction.eql?"Af"
 			amount = Float(amount) * -1
 		else 
-			p "ERROR: #{type}"
+			p "ERROR: #{direction}"
 			exit
 		end
 
-		description = "[#{row["MutatieSoort"]}]: #{row["Mededelingen"]}"[0,125]
+		payment_type = row["MutatieSoort"]
+		description_raw = row["Mededelingen"].length > 0 ? row["Mededelingen"] : "Name:"+row["Naam / Omschrijving"]
+		
+		description = "[#{payment_type}]: #{description_raw}"[0,170]
 		csv << [date, amount, description]
 	end
 end
