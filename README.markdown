@@ -17,3 +17,5 @@ Instructions:
 `./parse-ING-csv.rb [your-filename-here].csv`
 
 The script will output `[your-filename-here]-converted.csv`
+
+Caution: once you have uploaded the generated CSV, be careful tweaking the output format of this script because If you reupload the same transaction at a later date FreeAgent may not detect the duplicate (e.g. not good at detecting duplicates if the same transaction is re-uploaded with a different description length)
